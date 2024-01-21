@@ -1,0 +1,18 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+	<title>Insert title here</title>
+</head>
+<body>
+    <!-- your existing body content -->
+
+    <div id="error-message">
+        <p>Error: Nothing is in the cart</p>
+        <a href="<%= request.getContextPath() %>/Restaurants.jsp" class="back-to-restaurants-btn">Back to Restaurants</a>
+    </div>
+</body>
+</html>

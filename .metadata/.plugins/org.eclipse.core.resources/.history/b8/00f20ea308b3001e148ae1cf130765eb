@@ -1,0 +1,46 @@
+<%@ page import="java.util.Objects" %>
+<%@ page import="javax.servlet.http.HttpSession" %>
+<%@ page import="java.io.IOException" %>
+<%@ page import="com.foodDelivaryApp.model.Menu" %>
+<%@ page import="com.foodDelivaryApp.model.CartItem" %>
+<%@ page import="com.foodDelivaryApp.model.Cart" %>
+<%@ page import="javax.servlet.ServletException" %>
+<%@ page import="javax.servlet.http.HttpServletRequest" %>
+<%@ page import="javax.servlet.http.HttpServletResponse" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.ArrayList" %>
+
+<%
+    Boolean isLoggedIn = (Boolean) session.getAttribute("isLoggedIn");
+%>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Order Decision Page</title>
+    <!-- Include your CSS files here -->
+</head>
+<body>
+
+<h1>Order Decision Page</h1>
+
+
+
+<div>
+    <p>Check your login status:</p>
+    <p><strong>Is Logged In:</strong> <%= isLoggedIn != null && isLoggedIn %></p>
+</div>
+<%
+    Boolean isLoggedIn = (Boolean) session.getAttribute("isLoggedIn");
+isLoggedIn = isLoggedIn != null && isLoggedIn; 
+%>
+<button onclick='<%= isLoggedIn != null && isLoggedIn ? "window.location.href=\'" + request.getContextPath() + "/orderDetails.jsp\'" : "window.location.href=\'" + request.getContextPath() + "/Restaurents.jsp\'" %>'>
+    Proceed to Order
+</button>
+
+
+<!-- Include your JavaScript files here -->
+
+</body>
+</html>

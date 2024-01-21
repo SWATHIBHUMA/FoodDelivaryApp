@@ -1,0 +1,26 @@
+package com.foodDelivaryApp.Utilities;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Random;
+
+public class OrderIdGenerator {
+
+	public static int generateOrderId() {
+        // Get the current date and time
+        LocalDateTime orderDate = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+        String formattedOrderDate = orderDate.format(formatter);
+
+        // Generate an integer hash code from the concatenated date and time string
+        int orderId = formattedOrderDate.hashCode();
+
+        return orderId;
+    }
+
+    public static void main(String[] args) {
+        int orderId = generateOrderId();
+        System.out.println("Generated Order ID: " + orderId);
+    }
+}
+

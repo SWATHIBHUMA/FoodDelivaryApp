@@ -1,0 +1,56 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<form action="cart" method="post">
+									    <input type="hidden" name="action" value="increment">
+									    <input type="hidden" name="itemId" value="<%=cartItem.getItemId()%>">
+									    <input type="hidden" name="originalQty_<%=cartItem.getItemId()%>" value="<%=cartItem.getQuantity()%>">
+									    <input type="submit" value="+">
+									</form>
+									
+									<form action="cart" method="post">
+									    <input type="hidden" name="itemId" value="<%=cartItem.getItemId()%>">
+									    <input type="text" name="displayQty_<%=cartItem.getItemId()%>" value="<%= (session.getAttribute("displayQty_" + cartItem.getItemId()) != null) ? session.getAttribute("displayQty_" + cartItem.getItemId()) : 1 %>" readonly>
+									</form>
+									
+									<form action="cart" method="post">
+									    <input type="hidden" name="action" value="decrement">
+									    <input type="hidden" name="itemId" value="<%=cartItem.getItemId()%>">
+									    <input type="hidden" name="originalQty_<%=cartItem.getItemId()%>" value="<%=cartItem.getQuantity()%>">
+									    <input type="submit" value="-">
+									</form>
+									<%
+    // Assuming you have user details in the session
+    User user = (User) session.getAttribute("user");
+    String username = user.getUsername();
+    String email = user.getEmail();
+
+    // Get the address from the user input (replace "userInputAddress" with the actual attribute name)
+    String address = request.getParameter("userInputAddress");
+
+    // Get the total amount from the OrderServlet (replace "totalAmount" with the actual attribute name)
+    int totalAmount = (int) request.getAttribute("totalAmount");
+    int restaurantId = Integer.parseInt(request.getParameter("restaurantId"));
+
+    // Populate the order details
+    Order order = new Order();
+    order.setUserid(user.getUserId()); // Assuming you have a getUserId() method in the User class
+    order.setRestaurentid(restaurantId); // Replace with the actual restaurant ID
+    order.setTotalamount(totalAmount);
+    order.setStatus("Pending");
+    order.setPaymentmethod("UPI");
+
+    // Save the order to the database
+    OrderDaoImpl orderDao = new OrderDaoImpl();
+    orderDao.updateOrder(order);
+%>
+</body>
+</html>
+		    
+		    

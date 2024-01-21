@@ -1,0 +1,33 @@
+package com.foodDelivaryApp.model;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class Cart {
+	Map<Integer,CartItem> cartItems;
+	public Cart() {
+		cartItems = new HashMap<>();
+	}
+	public static void addItem(CartItem cart) {
+		
+		
+	}
+	public static void updateItem(int itemId, int quantity) {
+		
+		
+	}
+	public static void removeItem(int itemId) {
+		
+		
+	}
+	public static void getItems() {
+		
+		
+	}
+	
+	public static void clear() {
+		
+		
+	}
+	
+}

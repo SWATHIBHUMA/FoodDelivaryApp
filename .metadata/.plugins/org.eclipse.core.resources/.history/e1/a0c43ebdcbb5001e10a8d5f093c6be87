@@ -1,0 +1,80 @@
+package com.foodDelivaryApp.Utilities;
+
+import javax.crypto.Cipher;
+import javax.crypto.SecretKey;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
+import javax.crypto.spec.SecretKeySpec;
+import java.security.spec.KeySpec;
+import java.util.Base64;
+
+public class AESPasswordHashing {
+
+    private static final String ALGORITHM = "AES";
+    private static final String SECRET_KEY_ALGORITHM = "PBKDF2WithHmacSHA256";
+    private static final int ITERATION_COUNT = 65536;
+    private static final int KEY_SIZE = 256;
+
+    public static String hashPassword(String password, String salt) {
+        try {
+            // Derive a key using PBKDF2
+            KeySpec keySpec = new PBEKeySpec(password.toCharArray(), salt.getBytes(), ITERATION_COUNT, KEY_SIZE);
+            SecretKeyFactory secretKeyFactory = SecretKeyFactory.getInstance(SECRET_KEY_ALGORITHM);
+            SecretKey secretKey = secretKeyFactory.generateSecret(keySpec);
+
+            // Generate AES key from the derived key
+            SecretKeySpec secretKeySpec = new SecretKeySpec(secretKey.getEncoded(), ALGORITHM);
+
+            // Encrypt the password using AES
+            Cipher cipher = Cipher.getInstance(ALGORITHM);
+            cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec);
+            byte[] encryptedPassword = cipher.doFinal(password.getBytes());
+
+            // Encode the encrypted password to Base64
+            return Base64.getEncoder().encodeToString(encryptedPassword);
+        } catch (Exception e) {
+            throw new RuntimeException("Error hashing password: " + e.getMessage(), e);
+        }
+    }
+
+    public static boolean verifyPassword(String hashedPassword, String password, String salt) {
+        try {
+            // Derive a key using PBKDF2
+            KeySpec keySpec = new PBEKeySpec(password.toCharArray(), salt.getBytes(), ITERATION_COUNT, KEY_SIZE);
+            SecretKeyFactory secretKeyFactory = SecretKeyFactory.getInstance(SECRET_KEY_ALGORITHM);
+            SecretKey secretKey = secretKeyFactory.generateSecret(keySpec);
+
+            // Generate AES key from the derived key
+            SecretKeySpec secretKeySpec = new SecretKeySpec(secretKey.getEncoded(), ALGORITHM);
+
+            // Decrypt the stored password using AES
+            Cipher cipher = Cipher.getInstance(ALGORITHM);
+            cipher.init(Cipher.DECRYPT_MODE, secretKeySpec);
+            byte[] decryptedPassword = cipher.doFinal(Base64.getDecoder().decode(hashedPassword));
+
+            // Compare the decrypted password with the original password
+            return new String(decryptedPassword).equals(password);
+        } catch (Exception e) {
+            throw new RuntimeException("Error verifying password: " + e.getMessage(), e);
+        }
+    }
+
+    public static void main(String[] args) {
+        // Example usage
+//        String password = "securePassword123";
+//        String salt = "randomSalt";
+//
+//        // Hash the password
+//        String hashedPassword = hashPassword(password, salt);
+//
+//        // Later, when verifying the password
+//        String inputPassword = "securePassword123";
+//        boolean isPasswordValid = verifyPassword(hashedPassword, inputPassword, salt);
+//
+//        if (isPasswordValid) {
+//            System.out.println("Password is valid");
+//        } else {
+//            System.out.println("Password is not valid");
+//        }
+    }
+}

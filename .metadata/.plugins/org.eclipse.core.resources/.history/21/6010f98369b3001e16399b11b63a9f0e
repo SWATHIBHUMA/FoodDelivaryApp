@@ -1,0 +1,92 @@
+/* Reset some default styles for consistency */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to right, peachpuff, whitesmoke);
+    text-align: center;
+}
+
+h1 {
+    color: #333;
+    margin-top: 20px; /* Add margin to create space between the heading and the form */
+}
+
+form {
+    max-width: 600px;
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h2{
+	text-align: left;
+	margin-bottom: 20px;
+}
+
+.total-amount {
+    font-size: 18px; /* Adjust the font size based on your design */
+    color: #333;
+    margin-bottom: 10px; /* Add margin for spacing */
+    text-align: left; /* Align text to the left */
+}
+.section {
+    margin-bottom: 20px;
+}
+
+label {
+    display: inline-block; /* Display labels inline */
+    width: 30%; /* Adjust the width based on your design */
+    margin-bottom: 8px;
+    color: #333;
+    text-align: left; /* Align text to the left */
+}
+
+input,
+select {
+    width: 65%; /* Adjust the width based on your design */
+    display: inline-block; /* Display inputs inline */
+    padding: 15px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+#address {
+    width: 100%;
+    height: 100%; /* Make the height 100% to occupy the entire area */
+    padding: 35px; /* Adjust padding based on your design */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+button {
+	background: linear-gradient(to right, #ff105f,#ffad06);
+	/* Dark orange button color */
+	color: #ffffff;
+	/* White button text color */
+	padding: 15px 30px;
+	font-size: 24px;
+	/* Increased font size */
+	border: none;
+	border-radius: 8px;
+	cursor: pointer;
+	transition: background-color 0.3s ease, transform 0.3s ease;
+	outline: none;
+	/* Remove default focus outline */
+}
+
+button:hover {
+	background-color: #d35400;
+	transform: scale(1.1);
+	/* Darker orange on hover */
+}
+

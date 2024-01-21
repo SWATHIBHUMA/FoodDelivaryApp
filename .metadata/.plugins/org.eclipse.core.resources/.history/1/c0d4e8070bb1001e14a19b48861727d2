@@ -1,0 +1,5 @@
+package com.foodDelivaryApp.model;
+
+public class CartItem {
+
+}

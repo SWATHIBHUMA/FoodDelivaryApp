@@ -1,0 +1,52 @@
+package com.foodDelivaryApp.servlets;
+
+import java.io.IOException;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.foodDelivaryApp.daoImpl.MenuDaoImpl;
+import com.foodDelivaryApp.model.Menu;
+
+@WebServlet("/Menus")
+public class MenuServlet extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String restaurantIdParam = request.getParameter("restaurantId");
+
+        if (restaurantIdParam == null || restaurantIdParam.isEmpty() || "null".equalsIgnoreCase(restaurantIdParam)) {
+            // Handle the case where restaurantId is not provided
+            // You can redirect to an error page or handle it in another way
+            response.sendRedirect(request.getContextPath() + "/errorPage.jsp");
+            return;
+        }
+
+        try {
+            int restaurantId = Integer.parseInt(restaurantIdParam);
+
+            MenuDaoImpl menu = new MenuDaoImpl();
+            List<Menu> menuItems = menu.getAllMenusByRestaurent(restaurantId);
+
+            request.setAttribute("menuItems", menuItems);
+
+            RequestDispatcher dispatcher = request.getRequestDispatcher("Menus.jsp");
+            dispatcher.forward(request, response);
+
+        } catch (NumberFormatException e) {
+            // Handle the case where the parameter is not a valid integer
+            e.printStackTrace(); // Log the exception for debugging
+            response.sendRedirect(request.getContextPath() + "/errorPage.jsp");
+        } catch (Exception e) {
+            e.printStackTrace();
+            // Handle other exceptions if needed
+        }
+    }
+}
